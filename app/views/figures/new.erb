@@ -11,7 +11,7 @@
 
   <label>Select Figure's Titles</label>
   <% Title.all.each do |title| %>
-    <input type="checkbox" id="title_<%=title.id %>"  name="figure[title_ids][]" value="<%= title.id %>"><%=title.name%></input>
+    <input type="checkbox" id="title_<%=title.id%>"  name="figure[title_ids][]" value="<%=title.id%>"><%=title.name%></input>
   <% end %>
 
   <br></br>
@@ -21,13 +21,13 @@
   <br></br>
 
   <label>Figure's title:</label>
-  <input type="text" name="title[name]" id="new_title">
+  <input type="text" name="title[name]" id="new_title"></input>
 
   <br></br>
 
   <label>Select Figure's Landmarks</label>
   <% Landmark.all.each do |landmark| %>
-    <input type="checkbox" id="landmark_<%=landmark.id%>"  name="figure[landmark_ids][]" value="<%= landmark.id %>"><%=landmark.name%></input>
+    <input type="checkbox" id="landmark_<%=landmark.id%>"  name="figure[landmark_ids][]" value="<%=landmark.id%>"><%=landmark.name%></input>
   <% end %>
 
   <br></br>
