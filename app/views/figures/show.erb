@@ -1,8 +1,9 @@
 <h1>Figure: <%=@figure.name%></h1>
-
-<h3>Figure titles: </h3>
-<%@figure.titles.each do |t|%>
-  <h3>title: <%=t.name%></h3>
+<% if !@figure.titles.empty? %>
+  <h3>Figure titles: </h3>
+  <%@figure.titles.each do |t|%>
+    <h3>title: <%=t.name%></h3>
+  <%end%>
 <%end%>
 
 <h3>Figure landmarks: </h3>

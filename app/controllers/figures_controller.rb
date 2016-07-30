@@ -11,54 +11,56 @@ class FiguresController < ApplicationController
 
   post "/figures" do
 
-#    binding.pry
+    @figure = Figure.create(name: params[:figure][:name])
 
-    @figure = Figure.create(params[:figure])#(name: params[:figure][:name])
-
-    # params[:figure][:title_ids].each do |title|
-    #   @figure.titles << Title.find(title)
-    # end
+    if params[:figure][:title_ids]
+      params[:figure][:title_ids].each do |title|
+        @figure.titles << Title.find(title) unless @figure.titles.include?(Title.find(title))
+      end
+    end
 
     if !params[:title][:name].empty?
       @figure.titles << Title.create(name: params[:title][:name])
     end
 
-    # params[:figure][:landmark_ids].each do |landmark|
-    #   @figure.landmarks << Landmark.find(landmark)
-    # end
+    if params[:figure][:landmark_ids]
+      params[:figure][:landmark_ids].each do |landmark|
+        @figure.landmarks << Landmark.find(landmark) unless @figure.landmarks.include?(Landmark.find(landmark))
+      end
+    end
 
     if !params[:landmark][:name].empty?
       @figure.landmarks << Landmark.create(name: params[:landmark][:name])
     end
 
     @figure.save
-
     redirect "figures/#{@figure.id}"
   end
 
   get "/figures/:id" do
-#    binding.pry
     @figure = Figure.find(params[:id])
     erb :'/figures/show'
   end
 
   get "/figures/:id/edit" do
-#    binding.pry
     @figure = Figure.find(params[:id])
     erb :"/figures/edit"
   end
 
   post "/figures/:id" do
-    binding.pry
     @figure = Figure.find(params[:id])
-    @figure.name = Figure.find_or_create_by(name: params[:figure][:name])
+    @figure.name = params[:figure][:name]
 
-    params[:figure][:title_ids].each do |t|
-      @figure.titles << Title.find(t)
+    if params[:figure][:title_ids]
+      params[:figure][:title_ids].each do |t|
+        @figure.titles << Title.find(t) unless @figure.titles.include?(Title.find(t))
+      end
     end
 
-    params[:figure][:landmark_ids].each do |l|
-      @figure.landmarks << Landmark.find(l)
+    if params[:figure][:landmark_ids]
+      params[:figure][:landmark_ids].each do |l|
+        @figure.landmarks << Landmark.find(l) unless @figure.landmarks.include?(Landmark.find(l))
+      end
     end
 
     if !params["new_landmark"].empty?
@@ -66,7 +68,6 @@ class FiguresController < ApplicationController
     end
 
     @figure.save
-
     redirect "figures/#{@figure.id}"
   end
 
